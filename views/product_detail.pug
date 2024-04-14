@@ -1,0 +1,33 @@
+extends layout
+block content
+  h2=title
+  span [ 
+    each category in product.category 
+      a(href=category.url) #{category.name}
+  span  ]
+
+  hr
+  //- dl  
+  //-   dd Name: #{product.name}
+  //-   dd Description: #{product.description || 'No description.'}
+  //-   dd Price: $#{product.price}
+  //-   dd Instock: #{product.quantity}
+  .list-group 
+    ul.list-group
+      li.list-group-item #[strong Product Name: ]
+        span #{product.name}
+    ul.list-group
+      li.list-group-item #[strong Product Description: ]
+        span #{product.description || 'No description'}
+    ul.list-group
+      li.list-group-item #[strong Product Price: ]
+        span $#{product.price}
+    ul.list-group
+      li.list-group-item #[strong Product Quantity: ]
+        span #{product.quantity}
+
+  //- <ul class="list-group list-group-horizontal">
+  //- <li class="list-group-item">An item</li>
+  //- <li class="list-group-item">A second item</li>
+  //- <li class="list-group-item">A third item</li>
+  //- </ul>

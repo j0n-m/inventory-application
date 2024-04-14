@@ -1,0 +1,23 @@
+extends layout 
+block content 
+  h2 All Products in #{category.name}
+  p #{category.description}
+
+  //- if(productsByCategory.length)
+  //-   hr
+  //-   dl
+  //-     each product in productsByCategory
+  //-       dt 
+  //-         a(href=product.url) #{product.name}
+  //-       dd #{product.description || 'No description.'}
+  //- else 
+  //-   p No products in #{category.name}
+
+  if(productsByCategory.length)
+    hr
+    .list-group
+      each product in productsByCategory
+        a.list-group-item.list-group-item-action(href=product.url) 
+          div.d-flex.w-100.justify-content-between
+            h5.mb-1 #{product.name}
+          p #{product.description || 'No Description.'}

@@ -1,0 +1,28 @@
+extends layout 
+block content 
+  h2=title
+  form(method="POST") 
+    .input-group.mb-3 
+      label.input-group-text(for="product_name") Product Name:
+      input.form-control#product_name(type="text", name="product_name" required)
+    .input-group.mb-3 
+      label.input-group-text(for="product_description") Product Description:
+      textarea.form-control#product_description(name="product_description")
+    .input-group.mb-3 
+      label.input-group-text(for="product_price") Product Price:
+      input.form-control#product_price(type="number", name="product_price", placeholder="eg. 59.99", min=0, max=9999.99,step=0.01, required)
+    .input-group.mb-3 
+      label.input-group-text(for="product_quantity") Product QTY (Instock):
+      input.form-control#product_quantity(type="number", name="product_quantity", placeholder="eg: 10", min=0, max=999,step=1, required)
+    fieldset 
+      .form-group
+        legend.h6 Categories:
+        each category in allCategories  
+          .form-check.form-check-inline
+            input.form-check-input(type="checkbox", value=category.name, id=`checkbox_${category.name}`)
+            label.form-check-label(for=`checkbox_${category.name}`) #{category.name} 
+    
+    .input-group.mb-3
+      button.btn.btn-primary(type="submit") Create
+
+       

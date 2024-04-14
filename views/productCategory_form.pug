@@ -1,0 +1,13 @@
+extends layout 
+block content
+  h2=title 
+  form(method="POST") 
+    .input-group.mb-3
+      label.input-group-text(for="category_name") Category Name: 
+      input.form-control#category_name(type="text", name="category_name", placeholder="eg. Electronics", required)
+    .input-group.mb-3
+      label.input-group-text(for="category_description") Category Description (optional): 
+      textarea.form-control#category_description(type="text", name="category_description")
+    .input-group  
+      button.btn.btn-primary(type='submit') Create
+    

@@ -35,7 +35,7 @@ const productSchema = new Schema({
   category: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'productCategory'
+      ref: 'ProductCategory'
     }
   ]
 })

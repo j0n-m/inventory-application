@@ -1,0 +1,16 @@
+extends layout 
+block content 
+
+  h2=title
+  //- if(productList.length)
+  //-   ul 
+  //-     each product in productList 
+  //-       li 
+  //-         a(href=product.url) #{product.name} 
+  //- else 
+  //-   p No products to display.
+
+  if(productList.length)
+    ul.list-group
+      each product in productList 
+        a.list-group-item.list-group-item-action(href=product.url) #{product.name} 

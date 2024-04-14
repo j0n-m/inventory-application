@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p Total categories: #{categoryCount}
-  p Total products: #{productCount}
+  h2= title
+  ul.list-group
+    li.list-group-item Total categories: #{categoryCount}
+    li.list-group-item Total products: #{productCount}
