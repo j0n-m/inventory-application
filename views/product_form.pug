@@ -4,25 +4,34 @@ block content
   form(method="POST") 
     .input-group.mb-3 
       label.input-group-text(for="product_name") Product Name:
-      input.form-control#product_name(type="text", name="product_name" required)
+      input.form-control#product_name(type="text", name="product_name", value=(product == undefined ? '': product.name) required)
     .input-group.mb-3 
       label.input-group-text(for="product_description") Product Description:
-      textarea.form-control#product_description(name="product_description")
+      textarea.form-control#product_description(name="product_description", value=(product == undefined ? '':product.description))
     .input-group.mb-3 
       label.input-group-text(for="product_price") Product Price:
-      input.form-control#product_price(type="number", name="product_price", placeholder="eg. 59.99", min=0, max=9999.99,step=0.01, required)
+      input.form-control#product_price(type="number", name="product_price", placeholder="eg. 59.99", min=0, max=9999.99,step=0.01, required, value=(product == undefined ? '': product.price))
     .input-group.mb-3 
       label.input-group-text(for="product_quantity") Product QTY (Instock):
-      input.form-control#product_quantity(type="number", name="product_quantity", placeholder="eg: 10", min=0, max=999,step=1, required)
+      input.form-control#product_quantity(type="number", name="product_quantity", placeholder="eg: 10", min=0, max=999,step=1, required, value=(product == undefined ? '':product.quantity))
     fieldset 
       .form-group
-        legend.h6 Categories:
+        legend.h6 Categories (select at least one):
         each category in allCategories  
           .form-check.form-check-inline
-            input.form-check-input(type="checkbox", value=category.name, id=`checkbox_${category.name}`)
-            label.form-check-label(for=`checkbox_${category.name}`) #{category.name} 
+            if(category.checked)
+              input.form-check-input(type="checkbox",name="product_category", value=category._id, id=`${category._id}` checked)
+            else 
+              input.form-check-input(type="checkbox",name="product_category", value=category._id, id=`${category._id}`)
+            label.form-check-label(for=`${category._id}`) #{category.name} 
     
     .input-group.mb-3
       button.btn.btn-primary(type="submit") Create
+  hr
+  if(errors)
+    p Fix these errors to create this product: 
+    each e in errors 
+      li #{e.msg}
+  
 
        

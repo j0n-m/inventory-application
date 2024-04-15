@@ -61,7 +61,57 @@ exports.product_create_get = asyncHandler(async (req, res, next) => {
   })
   await mongoose.connection.close();
 });
-exports.product_create_post = asyncHandler();
+exports.product_create_post = [
+  (req, res, next) => {
+    if (!Array.isArray(req.body.product_category)) {
+      req.body.product_category =
+        (typeof req.body.product_category == undefined) ? [] : [req.body.product_category]
+    }
+    next();
+  },
+  body('product_name', 'Name must have two or more characters.').trim().isLength({ min: 2 }).escape(),
+  body('product_description').trim().optional({ values: 'falsy' }).escape(),
+  body('product_price', 'Price must be between 0.00 and 9999.99.').isFloat({ min: 0.00, max: 9999.99 }).escape(),
+  body('product_quantity', 'Quantity must be an integer value').isInt({ min: 0, max: 999 }).withMessage('Integer value must be between 0 and 999.').escape(),
+  body('product_category.*', 'Select at least one category for this product.').isLength({ min: 1 }).escape(),
+  asyncHandler(async (req, res, next) => {
+    await mongoose.connect(db)
+    const errors = validationResult(req);
+    const product = new Product({
+      name: req.body.product_name,
+      description: req.body.product_description,
+      price: req.body.product_price,
+      quantity: req.body.product_quantity,
+      category: req.body.product_category,
+    })
+    if (!errors.isEmpty()) {
+      //resend form 
+      const allCategories = await ProductCategory.find({}).sort({ name: 1 });
+
+      for (const category of allCategories) {
+        if (product.category.includes(category._id)) {
+          category.checked = "true";
+        }
+      }
+      res.render('product_form', {
+        title: 'Create a new product',
+        product,
+        allCategories,
+        errors: errors.array(),
+      });
+      await mongoose.connection.close();
+    } else {
+      const dupeProduct = await Product.findOne({ name: product.name });
+      if (dupeProduct) {
+        res.redirect(dupeProduct.url);
+      } else {
+        await product.save();
+        console.log('saving:', product)
+        res.redirect('/catalog/products');
+      }
+      await mongoose.connection.close();
+    }
+  })];
 exports.product_delete_get = asyncHandler();
 exports.product_delete_post = asyncHandler();
 exports.product_update_get = asyncHandler();
