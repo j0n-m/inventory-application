@@ -8,11 +8,6 @@ block content
     span  ]
 
   hr
-  //- dl  
-  //-   dd Name: #{product.name}
-  //-   dd Description: #{product.description || 'No description.'}
-  //-   dd Price: $#{product.price}
-  //-   dd Instock: #{product.quantity}
   .list-group 
     ul.list-group
       li.list-group-item #[strong Product Name: ]
@@ -26,9 +21,8 @@ block content
     ul.list-group
       li.list-group-item #[strong Product Quantity: ]
         span #{product.quantity}
-
-  //- <ul class="list-group list-group-horizontal">
-  //- <li class="list-group-item">An item</li>
-  //- <li class="list-group-item">A second item</li>
-  //- <li class="list-group-item">A third item</li>
-  //- </ul>
+  hr
+  p 
+    a(href=product.url+'/update') Update product 
+  p
+    a(href=product.url+'/delete') Delete product  

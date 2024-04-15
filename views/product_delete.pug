@@ -1,0 +1,15 @@
+extends layout 
+block content 
+  h2=title 
+  hr
+  ul.list-group
+      li.list-group-item #[strong Product Name: ]
+        span #{product.name}
+      li.list-group-item #[strong Product ID: ]
+        span #{product._id.toString()}
+  br
+  h6 #[strong Are you sure you want to delete this product?]
+  form(method="POST") 
+    input(type="hidden",name="product_id",value=product._id)
+    br
+    button.btn.btn-danger(type="submit") Delete

@@ -26,7 +26,11 @@ block content
             label.form-check-label(for=`${category._id}`) #{category.name} 
     
     .input-group.mb-3
-      button.btn.btn-primary(type="submit") Create
+      if(buttonName)
+        button.btn.btn-primary(type="submit") #{buttonName}
+      else 
+        button.btn.btn-primary(type="submit") Create
+
   hr
   if(errors)
     p Fix these errors to create this product: 

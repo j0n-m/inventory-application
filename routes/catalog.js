@@ -21,4 +21,13 @@ router.post('/product/create', productController.product_create_post)
 router.get('/product/:id', productController.product_detail)
 router.get('/category/:id', productCategoryController.productCategory_detail)
 
+//router for updating product
+router.get('/product/:id/update', productController.product_update_get);
+router.post('/product/:id/update', productController.product_update_post);
+
+//router for deleting product
+router.get('/product/:id/delete', productController.product_delete_get);
+router.post('/product/:id/delete', productController.product_delete_post);
+
+
 module.exports = router;
