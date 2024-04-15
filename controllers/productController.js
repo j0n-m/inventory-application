@@ -120,7 +120,7 @@ exports.product_delete_get = asyncHandler(async (req, res, next) => {
     res.redirect('/catalog/products');
   } else {
     res.render('product_delete', {
-      title: 'Delete product',
+      title: 'Delete Product',
       product
     })
   }
@@ -145,7 +145,6 @@ exports.product_update_get = asyncHandler(async (req, res, next) => {
     Product.findById(req.params.id),
     ProductCategory.find({}, "name").sort({ name: 1 })
   ]);
-  mongoose.connection.close();
 
   if (product == null) {
     console.log('error block')
@@ -159,11 +158,12 @@ exports.product_update_get = asyncHandler(async (req, res, next) => {
     }
   }
   res.render('product_form', {
-    title: 'Update product',
+    title: 'Update product - ' + product.name,
     product,
     allCategories,
     buttonName: 'Update'
-  })
+  });
+  await mongoose.connection.close();
 });
 exports.product_update_post = [
   (req, res, next) => {
@@ -205,10 +205,16 @@ exports.product_update_post = [
         errors: errors.array()
       })
     } else {
-      await Product.findByIdAndUpdate(product._id, product);
-      res.redirect(product.url);
+      // await Product.findByIdAndUpdate(product._id, product);
+      const dupeProduct = await Product.findOne({ name: product.name });
+      if (dupeProduct == null) {
+        await Product.findByIdAndUpdate(product._id, product);
+        res.redirect(product.url);
+      } else {
+        res.redirect(dupeProduct.url);
+      }
     }
-    mongoose.connection.close();
+    await mongoose.connection.close();
 
   })];
 

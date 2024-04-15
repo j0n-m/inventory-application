@@ -7,6 +7,15 @@ const productCategorySchema = new Schema({
     type: String,
     required: true,
     minLength: 2,
+    lowercase: true,
+    get: v => { //format string with beginning letter as uppercase for each word
+      let vArr = v.split(' ');
+      for (let i = 0; i < vArr.length; i++) {
+        //vArr[i] = vArr[i].toLowerCase();
+        vArr[i] = vArr[i][0].toUpperCase() + vArr[i].substring(1);
+      }
+      return vArr.join(' ');
+    },
   },
   description: {
     type: String,

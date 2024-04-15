@@ -1,0 +1,23 @@
+extends layout 
+block content 
+  h2=title 
+  hr
+  ul.list-group
+      li.list-group-item #[strong Category Name: ]
+        span #{category.name}
+      li.list-group-item #[strong Category ID: ]
+        span #{category._id.toString()}
+  br
+  if(productsByCategory.length)
+    h6 Delete the following products before deleting this category:
+    ul 
+      each product in productsByCategory 
+        p
+          li 
+            a(href=product.url) #{product.name}
+  else 
+    h6 #[strong Are you sure you want to delete this category?]
+    form(method="post") 
+      input(type="hidden" name="category_id" value=category._id)
+      br
+      button.btn.btn-danger(type="submit") Delete
