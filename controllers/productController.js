@@ -12,7 +12,7 @@ exports.index = asyncHandler(async function (req, res, next) {
     ProductCategory.find({}, 'title').countDocuments()
   ])
   res.render('index', {
-    title: 'Home page',
+    title: 'Inventory',
     productCount,
     categoryCount
   });
@@ -42,11 +42,13 @@ exports.product_detail = asyncHandler(async (req, res, next) => {
     const error = new Error('Product not found.');
     error.status = 404;
     next(error);
+  } else {
+    res.render('product_detail', {
+      title: 'Product details',
+      product,
+    })
   }
-  res.render('product_detail', {
-    title: 'Product details',
-    product,
-  })
+
 
   await mongoose.connection.close();
 });
@@ -57,7 +59,6 @@ exports.product_create_get = asyncHandler(async (req, res, next) => {
   res.render('product_form', {
     title: 'Create a new product',
     allCategories
-
   })
   await mongoose.connection.close();
 });
