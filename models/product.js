@@ -24,7 +24,7 @@ const productSchema = new Schema({
     get: v => currency(v),
     required: true,
     min: 0,
-    max: 999.99,
+    max: 9999.99,
   },
   quantity: {
     type: Number,
