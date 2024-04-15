@@ -207,7 +207,7 @@ exports.product_update_post = [
       })
     } else {
       // await Product.findByIdAndUpdate(product._id, product);
-      const dupeProduct = await Product.findOne({ name: product.name });
+      const dupeProduct = await Product.findOne({ name: product.name, description: product.description });
       if (dupeProduct == null) {
         await Product.findByIdAndUpdate(product._id, product);
         res.redirect(product.url);

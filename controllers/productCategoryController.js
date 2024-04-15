@@ -143,7 +143,7 @@ exports.category_update_post = [
     } else {
       await mongoose.connect(db);
       //check if same is duplicate
-      const dupeCategory = await ProductCategory.findOne({ name: category.name }).exec();
+      const dupeCategory = await ProductCategory.findOne({ name: category.name, description: category.description }).exec();
       if (dupeCategory == null) {
         await ProductCategory.findByIdAndUpdate(category._id, category);
         res.redirect(category.url);

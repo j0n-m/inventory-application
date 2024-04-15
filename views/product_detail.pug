@@ -2,9 +2,19 @@ extends layout
 block content
   h2=title
   if product
+    //- span [ 
+    //-   each category in product.category 
+    //-     a(href=category.url) #{category.name}
+    //- span  ]
     span [ 
-      each category in product.category 
-        a(href=category.url) #{category.name}
+      - for(let i = 0; i < product.category.length; i++)
+        - let cat = product.category[i];
+        - let lastIndex = product.category.length-1;
+        if(i == lastIndex)
+          a(href=cat.url) #{cat.name}
+        else
+          a(href=cat.url) #{cat.name}
+          |, 
     span  ]
 
   hr
